@@ -1,1 +1,3 @@
-# app-config
+# App-Config
+
+## AWS Configuration Tool
