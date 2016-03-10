@@ -8,6 +8,7 @@ class TestConfigProvider(unittest.TestCase):
     """
     Test ability to get config JSON from DynamoDB
     """
+
     @classmethod
     def setUpClass(self):
         self._config_provider = ConfigProvider('unit_test')
@@ -55,3 +56,7 @@ class TestConfigProvider(unittest.TestCase):
 
     def tearDown(self):
         pass
+
+
+def get_suite():
+    return unittest.TestLoader().loadTestsFromTestCase(TestConfigProvider)

@@ -70,4 +70,7 @@ target/
 
 # pycharm
 .idea
+
+#tests
+test-reports
 # Created by .ignore support plugin (hsz.mobi)
