@@ -11,9 +11,9 @@ def readme():
         return f.read()
 
 
-setup(name="config-provider",
+setup(name="app-config",
       version="1.0.0",
-      description="GBDX Config Provider",
+      description="GBDX App Config",
       long_description=readme(),
       keywords=['config', 'gbdx'],
       author="Various",
@@ -30,7 +30,7 @@ setup(name="config-provider",
       install_requires=[
           "boto>=2.38.0"
       ],
-      py_modules=['config_provider.config_provider'],
+      py_modules=['app_config.app_config'],
       include_package_data=True,
       entry_points={
 

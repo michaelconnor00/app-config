@@ -1,7 +1,7 @@
 __author__ = 'bcullen'
 
 import unittest
-from config_provider.config_provider import ConfigProvider
+from app_config.app_config import ConfigProvider
 
 
 class TestConfigProvider(unittest.TestCase):

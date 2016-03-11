@@ -4,7 +4,7 @@ from tests import config_provider_tests
 
 
 def run_tests():
-    output = 'test-reports/unit/config_provider'
+    output = 'test-reports/unit/app_config'
 
     suites = [
         config_provider_tests
