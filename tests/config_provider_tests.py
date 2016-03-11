@@ -1,7 +1,7 @@
 __author__ = 'bcullen'
 
 import unittest
-from app_config.app_config import ConfigProvider
+from app_config.app_config import AppConfig
 
 
 class TestConfigProvider(unittest.TestCase):
@@ -11,7 +11,7 @@ class TestConfigProvider(unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
-        self._config_provider = ConfigProvider('us-east-1', 'unit_test')
+        self._config_provider = AppConfig('us-east-1', 'unit_test')
 
     # Test lookup code without integration to persistent storage
     def test_val_in_stubbed_dictionary(self):
@@ -22,7 +22,7 @@ class TestConfigProvider(unittest.TestCase):
         self.assertEqual(val, 'unittestuser')
 
     def test_env_doesnt_exist(self):
-        default_config_provider = ConfigProvider('us-east-1', 'foo-env-doesnt-exist')
+        default_config_provider = AppConfig('us-east-1', 'foo-env-doesnt-exist')
         username = default_config_provider['unit_test_comp']['username']
         self.assertEqual(username, 'testuser')
         password = default_config_provider['unit_test_comp']['password']
@@ -47,11 +47,11 @@ class TestConfigProvider(unittest.TestCase):
         self.assertRaises(KeyError, self.helper_test_attribute_not_found)
 
     def test_creation_with_bad_env_name(self):
-        c = ConfigProvider('us-east-1', "foo_barrr")
+        c = AppConfig('us-east-1', "foo_barrr")
         self.assertEqual(c["unit_test_comp"]["password"], "testpass")
 
     def test_creation_with_good_env_name(self):
-        c = ConfigProvider('us-east-1', "unit_test")
+        c = AppConfig('us-east-1', "unit_test")
         self.assertEqual(c["unit_test_comp"]["password"], "envtestpass")
 
     def tearDown(self):

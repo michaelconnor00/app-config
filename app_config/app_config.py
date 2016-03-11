@@ -11,7 +11,7 @@ from boto.exception import BotoClientError
 from collections import defaultdict
 
 
-class ConfigProvider(object):
+class AppConfig(object):
     _ENVIRONMENT_DEFAULT_NAME = 'default'
     _DYNAMO_DB_TABLE = 'app_config'
 
