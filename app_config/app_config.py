@@ -20,8 +20,9 @@ class AppConfig(object):
         # Front load all resources early to fail fast if there is a retrieval or parsing problem
         self._resources = defaultdict(dict)
         self._environment = environment_name
-        self._conn = boto.dynamodb.connect_to_region(region_name=region)
-        self._table = self._conn.get_table(table_name)
+
+        _conn = boto.dynamodb.connect_to_region(region_name=region)
+        self._table = _conn.get_table(table_name)
 
     def __getitem__(self, resource_name):
         if not self._resources[resource_name]:
