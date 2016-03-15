@@ -13,10 +13,10 @@ Setup
   ```json
   "{ \"username\": \"testuser\", \"password\": \"testpass\" }"
   ```
-##### 3) Your dynamoDb Schema should appear like so:
+##### 3) Your DynamoDb schema should appear like so:
 
   | component | environment | config |  
-  ------------------------------------
+  ____________________________________
 
 How to Use
 ----------
