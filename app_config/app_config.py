@@ -17,7 +17,6 @@ class AppConfig(object):
 
     def __init__(self, region, environment_name, table_name=_DYNAMO_DB_TABLE):
 
-        # Front load all resources early to fail fast if there is a retrieval or parsing problem
         self._resources = defaultdict(dict)
         self._environment = environment_name
 
