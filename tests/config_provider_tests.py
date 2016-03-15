@@ -85,7 +85,7 @@ class TestConfigProvider(unittest.TestCase):
     def test_non_default_config_values_get_loaded(self):
         setup_dynamo_mock()
         self.app_config_cls = AppConfig('us-east-1', 'unit_test')
-        # 'test_env' key was not present in default config
+        # 'test_env' key was not present in default config, but still works because 'unit_test' env has the key
         self.assertEqual(self.app_config_cls['unit_test_comp']['test_new_env_var'], 'test_val')
 
     def tearDown(self):
