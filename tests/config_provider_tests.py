@@ -11,14 +11,11 @@ class TestConfigProvider(unittest.TestCase):
     Test ability to get config JSON from DynamoDB
     """
 
+    # Test lookup code without integration to persistent storage
     @mock_dynamodb
-    def setUp(self):
-        # configure mocks for dynamoDb
+    def test_set_item_fails(self):
         setup_dynamo_mock()
         self.app_config_cls = AppConfig('us-east-1', 'unit_test')
-
-    # Test lookup code without integration to persistent storage
-    def test_set_item_fails(self):
         try:
             self.app_config_cls['unit_test_comp'] = "test"
         except TypeError as e:
@@ -38,19 +35,28 @@ class TestConfigProvider(unittest.TestCase):
         password = app_config['unit_test_comp']['password']
         self.assertEqual(password, 'testpass')
 
+    @mock_dynamodb
     def test_env_override(self):
+        setup_dynamo_mock()
+        self.app_config_cls = AppConfig('us-east-1', 'unit_test')
         username = self.app_config_cls['unit_test_comp']['username']
         self.assertEqual(username, 'testuser')
         password = self.app_config_cls['unit_test_comp']['password']
         self.assertEqual(password, 'envtestpass')
 
+    @mock_dynamodb
     def helper_test_resource_not_found(self):
+        setup_dynamo_mock()
+        self.app_config_cls = AppConfig('us-east-1', 'unit_test')
         return self.app_config_cls['foo-doesnt-exist']['username']
 
     def test_resource_not_found(self):
         self.assertRaises(KeyError, self.helper_test_resource_not_found)
 
+    @mock_dynamodb
     def helper_test_attribute_not_found(self):
+        setup_dynamo_mock()
+        self.app_config_cls = AppConfig('us-east-1', 'unit_test')
         return self.app_config_cls['unit_test_comp']['bar-doesnt-exist']
 
     def test_attribute_not_found(self):
@@ -74,6 +80,13 @@ class TestConfigProvider(unittest.TestCase):
         setup_dynamo_mock(table_name=table_name)
         app_config = AppConfig('us-east-1', 'unit_test', table_name=table_name)
         self.assertEqual(app_config["unit_test_comp"]["password"], "envtestpass")
+
+    @mock_dynamodb
+    def test_non_default_config_values_get_loaded(self):
+        setup_dynamo_mock()
+        self.app_config_cls = AppConfig('us-east-1', 'unit_test')
+        # 'test_env' key was not present in default config
+        self.assertEqual(self.app_config_cls['unit_test_comp']['test_new_env_var'], 'test_val')
 
     def tearDown(self):
         pass
@@ -110,7 +123,7 @@ def setup_dynamo_mock(table_name="app_config"):
     )
 
     item_data2 = {
-        'config': "{ \"password\": \"envtestpass\" }"
+        'config': "{ \"password\": \"envtestpass\", \"test_new_env_var\": \"test_val\" }"
     }
 
     item2 = table.new_item(
