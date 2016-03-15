@@ -6,7 +6,7 @@ from app_config.app_config import AppConfig
 from moto import mock_dynamodb
 
 
-class TestConfigProvider(unittest.TestCase):
+class TestAppConfig(unittest.TestCase):
     """
     Test ability to get config JSON from DynamoDB
     """
@@ -137,4 +137,4 @@ def setup_dynamo_mock(table_name="app_config"):
 
 
 def get_suite():
-    return unittest.TestLoader().loadTestsFromTestCase(TestConfigProvider)
+    return unittest.TestLoader().loadTestsFromTestCase(TestAppConfig)
