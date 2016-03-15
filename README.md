@@ -29,7 +29,7 @@ $ pip install app-config
 ```python
 from app_config.app_config import AppConfig
 
-app_config = AppConfig(<aws region>, <config environment>, <dynamoDb Table name>)
+app_config = AppConfig(<aws region>, <config environment name>, <dynamoDb Table name>)
 
 print(app_config['workflows']['username'])
 'testuser'
