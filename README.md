@@ -2,7 +2,7 @@
 
 In a Nutshell
 -------------
-App-Config is a utility to retrieve configuration data from a DynamoDb Table
+App-Config is a utility to retrieve configuration data from a DynamoDb Table and access it easily.
 
 Setup
 -----
