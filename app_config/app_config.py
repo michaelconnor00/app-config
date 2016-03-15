@@ -7,8 +7,12 @@ This implementation finds it's resources in the DynamoDB table called 'app_confi
 import boto
 import boto.dynamodb
 import json
+import logging
 from boto.exception import BotoClientError
 from collections import defaultdict, Mapping
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 
 class AppConfig(Mapping):
@@ -46,7 +50,7 @@ class AppConfig(Mapping):
                 self._config_sections[resource_name].update(resource_dict)
         except BotoClientError as e:
             if e.reason == "Key does not exist.":
-                print(e.message)
+                logger.debug(e.message)
             else:
                 raise
         except Exception as e:
