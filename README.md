@@ -3,12 +3,16 @@
 Setup
 ----------
 ##### 1)  Create DynamoDb Table with HashKey and RangeKey of your choosing. 
-  Example: TableName: Music, HashKey: Artist, RangeKey: SongTitle
+  Example: TableName: app_config, HashKey: component, RangeKey: environment
 ##### 2)  Create attribute called 'config', and store JSON encoded string of key/value pairs
   Example: 
   ```json
   "{ \"username\": \"testuser\", \"password\": \"testpass\" }"
   ```
+##### 3) Your dynamoDb Schema should appear like so:
+
+  | component | environment | config |  
+  ------------------------------------
 
 How to Use
 ----------
