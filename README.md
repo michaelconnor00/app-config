@@ -1,7 +1,11 @@
 # GBDX App-Config
 
+In a Nutshell
+-------------
+App-Config is a utility to retrieve configuration data from a DynamoDb Table
+
 Setup
-----------
+-----
 ##### 1)  Create DynamoDb Table with HashKey and RangeKey of your choosing. 
   Example: TableName: app_config, HashKey: component, RangeKey: environment
 ##### 2)  Create attribute called 'config', and store JSON encoded string of key/value pairs
