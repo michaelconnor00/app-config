@@ -16,20 +16,10 @@ class TestAppConfig(unittest.TestCase):
     def test_set_item_fails(self):
         setup_dynamo_mock()
         self.app_config_cls = AppConfig('us-east-1', 'unit_test')
-        try:
+        with self.assertRaises(TypeError) as context:
             self.app_config_cls['unit_test_comp'] = "test"
-        except TypeError as e:
-            self.assertEqual(e.message, "'AppConfig' object does not support item assignment")
-
-        try:
-            self.app_config_cls['unit_test_comp']['foo'] = "test"
-        except TypeError as e:
-            self.assertEqual(e.message, "'AppConfig' object does not support item assignment")
-
-        try:
-            self.app_config_cls['unit_test_comp']['password'] = "test"
-        except TypeError as e:
-            self.assertEqual(e.message, "'AppConfig' object does not support item assignment")
+            # self.app_config_cls['unit_test_comp']['foo'] = "test"
+            # self.app_config_cls['unit_test_comp']['password'] = "test"
 
     @mock_dynamodb
     def test_env_doesnt_exist(self):
