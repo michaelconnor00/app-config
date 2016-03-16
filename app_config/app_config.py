@@ -47,7 +47,7 @@ class AppConfig(Mapping):
             item = self._table.get_item(hash_key=resource_name, range_key=environment)
             if item:
                 resource_dict = json.loads(item.get("config"))
-                self._config_sections[resource_name].update(resource_dict)
+                self._config_sections[resource_name].update(DictWrapper(resource_dict))
         except BotoClientError as e:
             if e.reason == "Key does not exist.":
                 logger.debug(e.message)
@@ -55,3 +55,21 @@ class AppConfig(Mapping):
                 raise
         except Exception as e:
             raise Exception('Error occured getting config, Reason: {0}'.format(e.message))
+
+
+class DictWrapper(Mapping):
+    def __init__(self, data):
+        self.data = data
+
+    def __getitem__(self, resource_name):
+        return self.data[resource_name]
+
+    def __iter__(self):
+        return iter(self.data)
+
+    def __len__(self):
+        return len(self.data)
+
+    def __contains__(self, item):
+        return item in self.data
+
