@@ -16,14 +16,15 @@ class TestAppConfig(unittest.TestCase):
     def test_set_item_fails(self):
         setup_dynamo_mock()
         app_config = AppConfig('us-east-1', 'unit_test')
-        # with self.assertRaises(TypeError) as context:
-        #     app_config['unit_test_comp'] = "test"
-        # with self.assertRaises(TypeError) as context:
-        #     app_config['unit_test_comp']['foo'] = "test"
-        # with self.assertRaises(TypeError) as context:
-        a = app_config['unit_test_comp']
-        a['password'] = "test"
-        x = 1
+
+        with self.assertRaises(TypeError):
+            app_config['unit_test_comp'] = {"test": "test"}
+
+        with self.assertRaises(TypeError):
+            app_config['unit_test_comp']['password'] = "test"
+
+        with self.assertRaises(TypeError):
+            app_config['unit_test_comp']['foo'] = "test"
 
     @mock_dynamodb
     def test_env_doesnt_exist(self):
