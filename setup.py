@@ -1,6 +1,7 @@
 import sys
 from setuptools import setup, find_packages
 
+
 if sys.version_info <= (2, 6):
     print("ERROR: config-provider requires Python Version 2.7 or above...exiting.")
     sys.exit(1)
@@ -11,9 +12,9 @@ def readme():
         return f.read()
 
 
-setup(name="config-provider",
-      version="1.0.0",
-      description="GBDX Config Provider",
+setup(name="app-config",
+      version="1.0.1",
+      description="GBDX App Config",
       long_description=readme(),
       keywords=['config', 'gbdx'],
       author="Various",
@@ -30,7 +31,7 @@ setup(name="config-provider",
       install_requires=[
           "boto>=2.38.0"
       ],
-      py_modules=['config_provider.config_provider'],
+      py_modules=['app_config.app_config'],
       include_package_data=True,
       entry_points={
 
