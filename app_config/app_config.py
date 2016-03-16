@@ -19,7 +19,7 @@ class AppConfigException(Exception):
 
 class ImmutableDict(Mapping):
     def __init__(self, data):
-        assert(isinstance(data, dict))
+        assert (isinstance(data, dict))
         self.data = data
 
     def __getitem__(self, resource_name):
@@ -30,6 +30,9 @@ class ImmutableDict(Mapping):
 
     def __len__(self):
         return len(self.data)
+
+    def __contains__(self, item):
+        return item in self.data
 
 
 class AppConfig(Mapping):
@@ -54,6 +57,9 @@ class AppConfig(Mapping):
     def __len__(self):
         return len(self._config_sections)
 
+    def __contains__(self, item):
+        return item in self._config_sections
+
     def _load_config_section(self, section_name, environment):
         tmp_dict = self._load_raw_dict(section_name, self._ENVIRONMENT_DEFAULT_NAME)
         tmp_dict.update(self._load_raw_dict(section_name, environment))
@@ -66,7 +72,7 @@ class AppConfig(Mapping):
             item = self._table.get_item(hash_key=section_name, range_key=environment)
             if item:
                 dict_ = json.loads(item.get("config", "{}"))
-                assert(isinstance(dict_, dict))
+                assert (isinstance(dict_, dict))
                 return_dict = dict_
         except BotoClientError as e:
             if e.reason == "Key does not exist.":
