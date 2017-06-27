@@ -71,9 +71,12 @@ class AppConfig(Mapping):
         try:
             item = self._table.get_item(hash_key=section_name, range_key=environment)
             if item:
-                dict_ = json.loads(item.get("config", "{}"))
-                assert (isinstance(dict_, dict))
-                return_dict = dict_
+                if item.get("config", None) and isinstance(item.get("config"), dict):
+                    return item.get("config")
+                else:
+                    dict_ = json.loads(item.get("config", "{}"))
+                    assert (isinstance(dict_, dict))
+                    return_dict = dict_
         except BotoClientError as e:
             if e.reason == "Key does not exist.":
                 logger.warning(e.message)
