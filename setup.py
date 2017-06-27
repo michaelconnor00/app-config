@@ -13,7 +13,7 @@ def readme():
 
 
 setup(name="app-config",
-      version="1.0.1",
+      version="1.0.2",
       description="GBDX App Config",
       long_description=readme(),
       keywords=['config', 'gbdx'],
