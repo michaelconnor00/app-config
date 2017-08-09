@@ -1,9 +1,7 @@
 """
 Application configuration provider with AWS DynamoDB persistance.
 """
-
-import boto
-import boto.dynamodb
+import boto3
 import json
 import logging
 from boto.exception import BotoClientError
@@ -43,7 +41,8 @@ class AppConfig(Mapping):
         self._environment = environment_name
         self._config_sections = {}
 
-        self._table = boto.dynamodb.connect_to_region(region_name=region).get_table(table_name)
+        self._dynamodb = boto3.resource('dynamodb', region)
+        self._table = self._dynamodb.Table(table_name)
 
     def __getitem__(self, resource_name):
         if not self._config_sections.get(resource_name):
@@ -67,16 +66,19 @@ class AppConfig(Mapping):
         self._config_sections[section_name] = ImmutableDict(tmp_dict)
 
     def _load_raw_dict(self, section_name, environment):
-        return_dict = {}
         try:
-            item = self._table.get_item(hash_key=section_name, range_key=environment)
-            if item:
-                if item.get("config", None) and isinstance(item.get("config"), dict):
-                    return item.get("config")
+            item = self._table.get_item(
+                Key={'component': section_name, 'environment': environment}
+            ).get('Item')
+            if item and item.get("config", None):
+                if isinstance(item["config"], dict):
+                    return item["config"]
                 else:
                     dict_ = json.loads(item.get("config", "{}"))
                     assert (isinstance(dict_, dict))
-                    return_dict = dict_
+                    return dict_
+            else:
+                return {}
         except BotoClientError as e:
             if e.reason == "Key does not exist.":
                 logger.warning(e.message)
@@ -84,5 +86,3 @@ class AppConfig(Mapping):
                 raise
         except Exception as e:
             raise AppConfigException('Error occurred getting config, Reason: {0}'.format(e.message))
-
-        return return_dict
