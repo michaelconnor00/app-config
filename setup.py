@@ -13,7 +13,7 @@ def readme():
 
 
 setup(name="app-config",
-      version="1.0.2",
+      version="1.0.3",
       description="GBDX App Config",
       long_description=readme(),
       keywords=['config', 'gbdx'],
@@ -29,7 +29,7 @@ setup(name="app-config",
                    "Topic :: Internet",
                    "Programming Language :: Python :: 2.7"],
       install_requires=[
-          "boto>=2.38.0"
+          "boto3>=1.4.5"
       ],
       py_modules=['app_config.app_config'],
       include_package_data=True,
