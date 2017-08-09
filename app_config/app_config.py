@@ -10,6 +10,10 @@ from collections import Mapping
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
+logging.getLogger('boto3').setLevel(logging.ERROR)
+logging.getLogger('botocore').setLevel(logging.ERROR)
+logging.getLogger('boto').setLevel(logging.ERROR)
+
 
 class AppConfigException(Exception):
     pass
