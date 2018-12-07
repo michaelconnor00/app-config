@@ -73,4 +73,5 @@ target/
 
 #tests
 test-reports
-# Created by .ignore support plugin (hsz.mobi)
+
+/test_app_config.py
